@@ -189,18 +189,33 @@ public class Board {
     }
     
     public func transform(transformation : Transformation) -> [[(x: Int, y: Int)]] {
-        var flippedBoard = Array(repeating: Array(repeating: (x: 0, y: 0), count: height), count: width)
-        for i in 0..<width {
-            for j in 0..<height {
+        var newHeight, newWidth : Int!
+        
+        switch transformation {
+        case .verticalFlip, .horizontalFlip:
+            newWidth = width
+            newHeight = height
+        default:
+            newWidth = height
+            newHeight = width
+        }
+        var flippedBoard = Array(repeating: Array(repeating: (x: 0, y: 0), count: newWidth), count: newHeight)
+        
+        for i in 0..<newHeight {
+            for j in 0..<newWidth {
                 switch transformation {
                 case .verticalFlip:
-                    flippedBoard[i][j] = (x: width - 1 - i, y: j)
+                    flippedBoard[i][j] = (x: newHeight - 1 - i, y: j)
                 case .horizontalFlip:
-                    flippedBoard[i][j] = (x: i, y: height - 1 - j)
+                    flippedBoard[i][j] = (x: i, y: newWidth - 1 - j)
                 case .topLeftToRightBottomFlip:
-                    flippedBoard[i][j] = (x: height - 1 - j, y: width - 1 - i)
+                    flippedBoard[i][j] = (x: newWidth - 1 - j, y: newHeight - 1 - i)
                 case .topRightToLeftBottomFlip:
                     flippedBoard[i][j] = (x: j, y: i)
+                case .leftRotate:
+                    flippedBoard[i][j] = (x: newWidth - 1 - j, y: i)
+                case .rightRotate:
+                    flippedBoard[i][j] = (x: j, y: newHeight - 1 - i)
                 }
             }
         }
@@ -235,4 +250,6 @@ public enum Transformation {
     case verticalFlip
     case topLeftToRightBottomFlip
     case topRightToLeftBottomFlip
+    case leftRotate
+    case rightRotate
 }
