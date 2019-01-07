@@ -18,25 +18,25 @@ public enum Direction: Int {
     case bottomRightToTopLeft = 135
     case bottomLeftToTopRight = 45
     
-    static func getDirection (_ first: (x: Int, y: Int), _ second: (x: Int, y: Int)) -> Direction {
-        if first.x < second.x {
-            if first.y == second.y {
+    static func getDirection (_ first: (a: Int, b: Int), _ second: (a: Int, b: Int)) -> Direction {
+        if first.a < second.a {
+            if first.b == second.b {
                 return .topToBottom
             }
-            if first.y < second.y {
+            if first.b < second.b {
                 return .topLeftToBottomRight
             }
             return .topRightToBottomLeft
-        } else if first.x > second.x {
-            if first.y == second.y {
+        } else if first.a > second.a {
+            if first.b == second.b {
                 return .bottomToTop
             }
-            if first.y < second.y {
+            if first.b < second.b {
                 return .bottomLeftToTopRight
             }
             return .bottomRightToTopLeft
         } else {
-            if first.y < second.y {
+            if first.b < second.b {
                 return .leftToRight
             } else {
                 return .rightToLeft

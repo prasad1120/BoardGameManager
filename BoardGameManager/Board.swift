@@ -26,18 +26,18 @@ public class Board {
         self.rule = rule
     }
     
-    public func getIndices (from position : Int) -> (x: Int, y: Int)?{
+    public func getIndices (from position : Int) -> (a: Int, b: Int)?{
         if !(0..<(height*width)).contains(position) {
             return nil
         }
-        let y = position % width
-        let x = (position - y) / width
-        return (x: x, y: y)
+        let b = position % width
+        let a = (position - b) / width
+        return (a: a, b: b)
     }
     
-    public func getPostion (from indices: (x: Int, y: Int)) -> Int? {
+    public func getPosition (from indices: (a: Int, b: Int)) -> Int? {
         if isValidIndex(indices) {
-            return indices.x * width + indices.y
+            return indices.a * width + indices.b
         }
         return nil
     }
@@ -74,18 +74,18 @@ public class Board {
         return adjacencyGraph
     }
     
-    public func areNeighbours (first : (x : Int, y : Int), second : (x : Int, y : Int))  -> Bool? {
+    public func areNeighbours (first : (a : Int, b : Int), second : (a : Int, b : Int))  -> Bool? {
         
         if first == second && !isValidIndex (first, second){
             return nil
         }
         
-        var parent, child : (x : Int, y : Int)!
+        var parent, child : (a : Int, b : Int)!
         
         parent = first < second ? first : second
         child = first >= second ? first : second
         
-        return indexAdjacencyGraph[[parent.x, parent.y]]!.contains([child.x, child.y])
+        return indexAdjacencyGraph[[parent.a, parent.b]]!.contains([child.a, child.b])
     }
     
     public func isValidIndex (_ indices : (Int, Int)...) -> Bool{
@@ -136,7 +136,7 @@ public class Board {
         return randomString
     }
     
-    public func getAngle (first: (x: Int, y: Int), second: (x: Int, y: Int), third: (x: Int, y: Int)) -> Angle? {
+    public func getAngle (first: (a: Int, b: Int), second: (a: Int, b: Int), third: (a: Int, b: Int)) -> Angle? {
         if first == second || second == third || third == first || !isValidIndex(first, second, third) {
             return nil
         }
@@ -146,31 +146,31 @@ public class Board {
         return Angle.getAngle(firstDirection, secondDirection)
     }
     
-    public func getDirection (first: (x: Int, y: Int), second: (x: Int, y: Int)) -> Direction? {
+    public func getDirection (first: (a: Int, b: Int), second: (a: Int, b: Int)) -> Direction? {
         if first == second || !isValidIndex(first, second) {
             return nil
         }
         return Direction.getDirection(first, second)
     }
     
-    public func getSpiralTraversalPath () -> [(x: Int, y: Int)] {
+    public func getSpiralTraversalPath () -> [(a: Int, b: Int)] {
         
-        var k = 0, l = 0, m = height!, n = width!, indices = [(x: Int, y: Int)]()
+        var k = 0, l = 0, m = height!, n = width!, indices = [(a: Int, b: Int)]()
         while k < m && l < n {
             for i in l..<n {
-                indices.append((x: k, y: i))
+                indices.append((a: k, b: i))
             }
             k += 1
             
             for i in k..<m {
-                indices.append((x: i, y: n - 1))
+                indices.append((a: i, b: n - 1))
             }
             n -= 1
             
             if k < m {
                 var i = n - 1
                 while i >= l {
-                    indices.append((x: m - 1, y: i))
+                    indices.append((a: m - 1, b: i))
                     i -= 1
                 }
                 m -= 1
@@ -179,7 +179,7 @@ public class Board {
             if l < n {
                 var i = m - 1
                 while i >= k {
-                    indices.append((x: i, y: l))
+                    indices.append((a: i, b: l))
                     i -= 1
                 }
                 l += 1
@@ -188,7 +188,7 @@ public class Board {
         return indices
     }
     
-    public func transform(transformation : Transformation) -> [[(x: Int, y: Int)]] {
+    public func transform(transformation : Transformation) -> [[(a: Int, b: Int)]] {
         var newHeight, newWidth : Int!
         
         switch transformation {
@@ -199,23 +199,23 @@ public class Board {
             newWidth = height
             newHeight = width
         }
-        var flippedBoard = Array(repeating: Array(repeating: (x: 0, y: 0), count: newWidth), count: newHeight)
+        var flippedBoard = Array(repeating: Array(repeating: (a: 0, b: 0), count: newWidth), count: newHeight)
         
         for i in 0..<newHeight {
             for j in 0..<newWidth {
                 switch transformation {
                 case .verticalFlip:
-                    flippedBoard[i][j] = (x: newHeight - 1 - i, y: j)
+                    flippedBoard[i][j] = (a: newHeight - 1 - i, b: j)
                 case .horizontalFlip:
-                    flippedBoard[i][j] = (x: i, y: newWidth - 1 - j)
+                    flippedBoard[i][j] = (a: i, b: newWidth - 1 - j)
                 case .topLeftToRightBottomFlip:
-                    flippedBoard[i][j] = (x: newWidth - 1 - j, y: newHeight - 1 - i)
+                    flippedBoard[i][j] = (a: newWidth - 1 - j, b: newHeight - 1 - i)
                 case .topRightToLeftBottomFlip:
-                    flippedBoard[i][j] = (x: j, y: i)
+                    flippedBoard[i][j] = (a: j, b: i)
                 case .leftRotate:
-                    flippedBoard[i][j] = (x: newWidth - 1 - j, y: i)
+                    flippedBoard[i][j] = (a: newWidth - 1 - j, b: i)
                 case .rightRotate:
-                    flippedBoard[i][j] = (x: j, y: newHeight - 1 - i)
+                    flippedBoard[i][j] = (a: j, b: newHeight - 1 - i)
                 }
             }
         }
