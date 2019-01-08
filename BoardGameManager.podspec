@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'BoardGameManager'
-  s.version          = '1.0.0'
+  s.version          = '1.1.0'
   s.summary          = 'Helps with traversing, transformation and score calculation in board games'
   s.homepage         = 'https://github.com/prasad1120/BoardGameManager'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
