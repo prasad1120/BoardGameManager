@@ -7,8 +7,8 @@
 BoardGameManager is a Cocoapod that helps with score calculation, transformation and traversal in board games on iOS. It gives the direction and angles between nodes in trails on the board which can be used for score calculation (Weirder the angle, higher the score). It has spiral traversal and various flipping and rotational transformations. 
 
 ## Requirements 
-- Swift 4.2
-- iOS 10 and above
+- Swift 5
+- iOS 12 and above
 
 ## Installation
 BoardGameManager is available on [CocoaPods](https://cocoapods.org/pods/BoardGameManager).
