@@ -1,6 +1,7 @@
 # BoardGameManager
 [![Version](https://img.shields.io/cocoapods/v/BoardGameManager.svg)](https://cocoapods.org/pods/BoardGameManager)
 [![Platform](https://img.shields.io/cocoapods/p/BoardGameManager.svg)](https://cocoapods.org/pods/BoardGameManager)
+![GitHub top language](https://img.shields.io/github/languages/top/prasad1120/BoardGameManager)
 [![License](https://img.shields.io/github/license/prasad1120/BoardGameManager.svg?style=flat)](./LICENSE)
 
 BoardGameManager is a Cocoapod that helps with score calculation, transformation and traversal in board games on iOS. It gives the direction and angles between nodes in trails on the board which can be used for score calculation (Weirder the angle, higher the score). It has spiral traversal and various flipping and rotational transformations. 
@@ -21,29 +22,46 @@ Run `pod install`.
 ## Usage
 Create a board
 ~~~swift
-let board = BoardManager.shared.getBoard(width: 3, height: 3, rule: BoardTraversingRule.orthogonalOnly)
+let board = Board(height: 5, width: 3, rule: .orthogonalAndDiagonal)
 ~~~
-### List of methods in `Board`
+### List of methods:
+~~~swift
+areNeighbours(first : (a: Int, b: Int), second : (a: Int, b: Int))  -> Bool?
+~~~
+~~~swift
+createAndSetRandomString (from set: [Character]? = nil) -> String
+~~~
+~~~swift
+createAndSetRandomStringUsingLetterFrequency() -> String
+~~~
+~~~swift
+isValidIndex(_ indices : (Int, Int)...) -> Bool
+~~~
+~~~swift
+getAngle(first: (x: Int, y: Int), second: (x: Int, y: Int), third: (x: Int, y: Int)) -> Angle?
+~~~
+~~~swift
+getDirection(first: (x: Int, y: Int), second: (x: Int, y: Int)) -> Direction?
+~~~
+~~~swift
+getHeight() -> Int
+~~~
+~~~swift
+getIndices(from position : Int) -> (a: Int, b: Int)?
+~~~
+~~~swift
+getPosition(from indices: (a: Int, b: Int)) -> Int?
+~~~
+~~~swift
+getSpiralTraversalPath() -> [(x: Int, y: Int)]
+~~~
+~~~swift
+getWidth() -> Int
+~~~
+~~~swift
+transform(transformation : Transformation) -> [[(x: Int, y: Int)]]
+~~~
 
-- `getAngle (first: (x: Int, y: Int), second: (x: Int, y: Int), third: (x: Int, y: Int)) -> Angle?`
-
-- `getDirection (first: (x: Int, y: Int), second: (x: Int, y: Int)) -> Direction?`
-
-- `transform(transformation : Transformation) -> [[(x: Int, y: Int)]]`
-
-- `areNeighbours (first : (a: Int, b: Int), second : (a: Int, b: Int))  -> Bool?`
-
-- `getSpiralTraversalPath () -> [(x: Int, y: Int)]`
-
-- `createAndSetRandomStringUsingLetterFrequency () -> String`
-
-- `createAndSetRandomString (from set: [Character]) -> String`
-
-- `getIndices (from position : Int) -> (a: Int, b: Int)?`
-
-- `getPosition (from indices: (a: Int, b: Int)) -> Int?`
-
-- `isValidIndex (_ indices : (Int, Int)...) -> Bool`
 
 
 
