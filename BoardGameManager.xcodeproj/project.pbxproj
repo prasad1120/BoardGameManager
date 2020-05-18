@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		22EBBA9421DB6038000A35DE /* BoardGameManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 22EBBA9221DB6038000A35DE /* BoardGameManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		22EBBA9B21DB605B000A35DE /* BoardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EBBA9A21DB605B000A35DE /* BoardManager.swift */; };
 		22EBBA9D21DB6069000A35DE /* Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EBBA9C21DB6069000A35DE /* Direction.swift */; };
 		22EBBA9F21DB6075000A35DE /* Angle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EBBA9E21DB6075000A35DE /* Angle.swift */; };
 		22EBBAA121DB6084000A35DE /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EBBAA021DB6084000A35DE /* Board.swift */; };
@@ -18,7 +17,6 @@
 		22EBBA8F21DB6038000A35DE /* BoardGameManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BoardGameManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		22EBBA9221DB6038000A35DE /* BoardGameManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BoardGameManager.h; sourceTree = "<group>"; };
 		22EBBA9321DB6038000A35DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		22EBBA9A21DB605B000A35DE /* BoardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardManager.swift; sourceTree = "<group>"; };
 		22EBBA9C21DB6069000A35DE /* Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Direction.swift; sourceTree = "<group>"; };
 		22EBBA9E21DB6075000A35DE /* Angle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Angle.swift; sourceTree = "<group>"; };
 		22EBBAA021DB6084000A35DE /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
@@ -56,7 +54,6 @@
 			children = (
 				22EBBA9221DB6038000A35DE /* BoardGameManager.h */,
 				22EBBA9321DB6038000A35DE /* Info.plist */,
-				22EBBA9A21DB605B000A35DE /* BoardManager.swift */,
 				22EBBA9C21DB6069000A35DE /* Direction.swift */,
 				22EBBA9E21DB6075000A35DE /* Angle.swift */,
 				22EBBAA021DB6084000A35DE /* Board.swift */,
@@ -143,7 +140,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22EBBA9B21DB605B000A35DE /* BoardManager.swift in Sources */,
 				22EBBA9F21DB6075000A35DE /* Angle.swift in Sources */,
 				22EBBAA121DB6084000A35DE /* Board.swift in Sources */,
 				22EBBA9D21DB6069000A35DE /* Direction.swift in Sources */,

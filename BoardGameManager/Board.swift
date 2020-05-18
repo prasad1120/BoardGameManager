@@ -20,14 +20,39 @@ public class Board {
         return createIndexAdjacencyGraph()
     }()
     
-    init (width : Int, height : Int, rule : BoardTraversingRule) {
+    public enum BoardTraversingRule {
+        case orthogonalOnly
+        case orthogonalAndDiagonal
+    }
+    
+    public enum Transformation {
+        case horizontalFlip
+        case verticalFlip
+        case topLeftToRightBottomFlip
+        case topRightToLeftBottomFlip
+        case leftRotate
+        case rightRotate
+    }
+    
+    public init? (height : Int, width: Int, rule : BoardTraversingRule) {
+        if (width < 2 || height < 2 || width > 1000 || height > 1000) {
+            return nil
+        }
         self.width = width
         self.height = height
         self.rule = rule
     }
     
+    public func getWidth() -> Int {
+        return width
+    }
+    
+    public func getHeight() -> Int {
+        return height
+    }
+    
     public func getIndices (from position : Int) -> (a: Int, b: Int)?{
-        if !(0..<(height*width)).contains(position) {
+        guard (0..<(height*width)).contains(position) else {
             return nil
         }
         let b = position % width
@@ -36,10 +61,7 @@ public class Board {
     }
     
     public func getPosition (from indices: (a: Int, b: Int)) -> Int? {
-        if isValidIndex(indices) {
-            return indices.a * width + indices.b
-        }
-        return nil
+        return isValidIndex(indices) ? (indices.a * width + indices.b) : nil
     }
     
     func createIndexAdjacencyGraph () -> [[Int] : [[Int]]] {
@@ -54,18 +76,14 @@ public class Board {
                 }
                 
                 if (i + 1) < height {
-                    
-                    switch rule! {
-                    case .orthogonalAndDiagonal:
+                    if rule == .orthogonalAndDiagonal {
                         if (j - 1) >= 0 {
                             adjacentNodes.append([i + 1, j - 1])
                         }
                         if (j + 1) < width {
                             adjacentNodes.append([i + 1, j + 1])
                         }
-                    default: break
                     }
-                    
                     adjacentNodes.append([i + 1, j])
                 }
                 adjacencyGraph[[i, j]] = adjacentNodes
@@ -76,14 +94,20 @@ public class Board {
     
     public func areNeighbours (first : (a : Int, b : Int), second : (a : Int, b : Int))  -> Bool? {
         
-        if first == second && !isValidIndex (first, second){
-            return nil
+        guard first != second,
+            isValidIndex(first, second) else {
+                return nil
         }
         
         var parent, child : (a : Int, b : Int)!
         
-        parent = first < second ? first : second
-        child = first >= second ? first : second
+        if first < second {
+            parent = first
+            child = second
+        } else {
+            parent = second
+            child = first
+        }
         
         return indexAdjacencyGraph[[parent.a, parent.b]]!.contains([child.a, child.b])
     }
@@ -91,8 +115,9 @@ public class Board {
     public func isValidIndex (_ indices : (Int, Int)...) -> Bool{
         
         for index in indices {
-            if !((0..<height).contains(index.0) && (0..<width).contains(index.1)) {
-                return false
+            guard (0..<height).contains(index.0),
+                (0..<width).contains(index.1) else {
+                    return false
             }
         }
         return true
@@ -112,13 +137,13 @@ public class Board {
         return randomString
     }
     
-    public func createAndSetRandomString (from set: [Character]) -> String {
+    public func createAndSetRandomString (from set: [Character]? = nil) -> String {
         var randomString = ""
         var cumFreq = [Double]()
         var sum = 0.0
-        let steps = 1.0 / Double(set.count)
+        let steps = 1.0 / Double(set?.count ?? 26)
         
-        for _ in 0..<set.count {
+        for _ in 0..<(set?.count ?? 26) {
             sum += steps
             cumFreq.append(sum)
         }
@@ -130,24 +155,24 @@ public class Board {
             while cumFreq[j] < random {
                 j += 1
             }
-            randomString.append(set[j])
+            randomString.append(set?[j] ?? Character(UnicodeScalar(j + 65)!))
         }
         self.randomString = randomString
         return randomString
     }
     
     public func getAngle (first: (a: Int, b: Int), second: (a: Int, b: Int), third: (a: Int, b: Int)) -> Angle? {
-        if first == second || second == third || third == first || !isValidIndex(first, second, third) {
+        guard isValidIndex(first, second, third),
+            let firstDirection = Direction.getDirection(first, second),
+            let secondDirection = Direction.getDirection(second, third) else {
             return nil
         }
-        let firstDirection = Direction.getDirection(first, second)
-        let secondDirection = Direction.getDirection(second, third)
         
         return Angle.getAngle(firstDirection, secondDirection)
     }
     
     public func getDirection (first: (a: Int, b: Int), second: (a: Int, b: Int)) -> Direction? {
-        if first == second || !isValidIndex(first, second) {
+        guard isValidIndex(first, second) else {
             return nil
         }
         return Direction.getDirection(first, second)
@@ -229,27 +254,11 @@ func < (left: (Int, Int), right: (Int, Int)) -> Bool {
     } else if left.0 > right.0 {
         return false
     } else {
-        if left.1 < right.1 {
-            return true
-        } else {
-            return false
-        }
+        return left.1 < right.1
     }
 }
 
 func == (left: (Int, Int), right: (Int, Int)) -> Bool {
-    if left.0 == right.0 && left.1 == right.1 {
-        return true
-    }
-    return false
+    return left.0 == right.0 && left.1 == right.1
 }
 
-
-public enum Transformation {
-    case horizontalFlip
-    case verticalFlip
-    case topLeftToRightBottomFlip
-    case topRightToLeftBottomFlip
-    case leftRotate
-    case rightRotate
-}

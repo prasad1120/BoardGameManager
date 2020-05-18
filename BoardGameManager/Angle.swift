@@ -8,14 +8,14 @@
 
 import Foundation
 
-public enum Angle : Int {
+public enum Angle : Int, CaseIterable {
     case acute = 45
     case right = 90
     case obtuse = 135
-    case linear = 180
-    case opposite = 0
+    case linear = 0
+    case opposite = 180
     
-    static func getAngle (_ first : Direction, _ second : Direction) -> Angle {
+    static func getAngle (_ first : Direction, _ second : Direction) -> Angle? {
         let difference = first.rawValue - second.rawValue
         let cosOfAngle : Double
         
@@ -25,17 +25,10 @@ public enum Angle : Int {
             cosOfAngle = cos(Double(abs(180 - (abs(difference)))).toRadians())
         }
         
-        if cosOfAngle == cos(Double(Angle.acute.rawValue).toRadians()) {
-            return .acute
-        } else if cosOfAngle == cos(Double(Angle.right.rawValue).toRadians()) {
-            return .right
-        } else if cosOfAngle == cos(Double(Angle.obtuse.rawValue).toRadians()) {
-            return .obtuse
-        } else if cosOfAngle == cos(Double(Angle.linear.rawValue).toRadians()){
-            return .linear
-        } else {
-            return .opposite
+        for angle in Angle.allCases where cosOfAngle == cos(Double(angle.rawValue).toRadians()) {
+            return angle
         }
+        return nil
     }
 }
 
